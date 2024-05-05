@@ -18,7 +18,11 @@ public record PessoaForm(
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
         @JsonFormat(pattern = "dd-MM-yyyy")
         LocalDate dataNascimento,
-        EnderecoModel enderecoPrincipal,
-        List<EnderecoModel> enderecos
+
+        List<EnderecoForm> enderecos
 ) {
+
+        public PessoaForm(String nomeCompleto, LocalDate dataNascimento) {
+                this(nomeCompleto, dataNascimento, null);
+        }
 }

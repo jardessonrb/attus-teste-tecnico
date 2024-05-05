@@ -2,7 +2,10 @@ package jrb.testetecnico.attus.service.pessoa.impl;
 
 import jrb.testetecnico.attus.domain.dto.PessoaDto;
 import jrb.testetecnico.attus.domain.form.PessoaForm;
+import jrb.testetecnico.attus.domain.model.PessoaModel;
+import jrb.testetecnico.attus.domain.repository.PessoaRepository;
 import jrb.testetecnico.attus.service.pessoa.PessoaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +13,21 @@ import java.util.UUID;
 
 @Service
 public class PessoaServiceImpl implements PessoaService {
+
+    @Autowired
+    private PessoaRepository pessoaRepository;
+
     @Override
     public PessoaDto criar(PessoaForm pessoaForm) {
-        return null;
+        PessoaModel pessoa = PessoaModel
+                .builder()
+                .nomeCompleto(pessoaForm.nomeCompleto())
+                .dataNascimento(pessoaForm.dataNascimento())
+                .build();
+
+        pessoa = pessoaRepository.save(pessoa);
+
+        return PessoaDto.toDto(pessoa);
     }
 
     @Override
