@@ -1,4 +1,4 @@
-package jrb.testetecnico.attus.model;
+package jrb.testetecnico.attus.domain.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

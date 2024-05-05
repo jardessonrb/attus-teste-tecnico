@@ -1,14 +1,11 @@
-package jrb.testetecnico.attus.dto;
+package jrb.testetecnico.attus.domain.dto;
 
-import jakarta.persistence.*;
-import jrb.testetecnico.attus.model.EnderecoModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor

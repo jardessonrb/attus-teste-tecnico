@@ -1,9 +1,9 @@
-package jrb.testetecnico.attus.form;
+package jrb.testetecnico.attus.domain.form;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jrb.testetecnico.attus.model.EnderecoModel;
+import jrb.testetecnico.attus.domain.model.EnderecoModel;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;

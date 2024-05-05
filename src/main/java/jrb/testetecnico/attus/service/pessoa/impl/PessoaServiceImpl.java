@@ -1,7 +1,7 @@
 package jrb.testetecnico.attus.service.pessoa.impl;
 
-import jrb.testetecnico.attus.dto.PessoaDto;
-import jrb.testetecnico.attus.form.PessoaForm;
+import jrb.testetecnico.attus.domain.dto.PessoaDto;
+import jrb.testetecnico.attus.domain.form.PessoaForm;
 import jrb.testetecnico.attus.service.pessoa.PessoaService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
