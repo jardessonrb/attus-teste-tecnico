@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
@@ -37,7 +38,13 @@ public class PessoaServiceImpl implements PessoaService {
 
     @Override
     public PessoaDto buscarPorId(UUID pessoaId) {
-        return null;
+        PessoaModel pessoa = pessoaRepository
+                .findByUuid(pessoaId)
+                .orElseThrow(
+                        () -> new NoSuchElementException("Nenhuma pessoa encontrada para o id "+pessoaId)
+                );
+
+        return PessoaDto.toDto(pessoa);
     }
 
     @Override
