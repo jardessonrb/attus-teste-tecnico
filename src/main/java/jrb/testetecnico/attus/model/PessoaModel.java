@@ -26,6 +26,4 @@ public class PessoaModel extends ModeloBase{
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "pessoa_id")
     private List<EnderecoModel> enderecos;
-
-
 }

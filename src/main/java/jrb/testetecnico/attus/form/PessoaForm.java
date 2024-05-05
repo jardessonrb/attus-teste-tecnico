@@ -1,11 +1,24 @@
-package jrb.testetecnico.attus.dto;
+package jrb.testetecnico.attus.form;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jrb.testetecnico.attus.model.EnderecoModel;
+import org.springframework.format.annotation.DateTimeFormat;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-public class PessoaForm {
+import java.time.LocalDate;
+import java.util.List;
+
+public record PessoaForm(
+        @NotNull
+        @NotBlank
+        String nomeCompleto,
+
+        @NotNull
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+        @JsonFormat(pattern = "dd-MM-yyyy")
+        LocalDate dataNascimento,
+        EnderecoModel enderecoPrincipal,
+        List<EnderecoModel> enderecos
+) {
 }
