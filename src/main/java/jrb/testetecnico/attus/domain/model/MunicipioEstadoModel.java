@@ -1,6 +1,19 @@
 package jrb.testetecnico.attus.domain.model;
 
-public class MunicipioEstado extends ModeloBase {
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+@Entity
+@Table(name = "tb_municipio_estado")
+public class MunicipioEstadoModel extends ModeloBase {
 
     private String nomeMunicipio;
 
