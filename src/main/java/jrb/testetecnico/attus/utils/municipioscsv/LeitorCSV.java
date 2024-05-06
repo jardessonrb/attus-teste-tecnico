@@ -1,4 +1,4 @@
-package jrb.testetecnico.attus.service.municipioscsv;
+package jrb.testetecnico.attus.utils.municipioscsv;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
@@ -19,13 +19,14 @@ public class LeitorCSV<T> {
     @Autowired
     private ResourceLoader resourceLoader;
 
-    public List<T> lerArquivoCSV(String pathArquivoCSV, ProcessadorCSV<T> processadorCSV){
+    public List<T> lerArquivoCSV(String pathArquivoCSV, ProcessadorCSVStrategy<T> processadorCSV){
         try {
             Resource resource = resourceLoader.getResource("classpath:"+pathArquivoCSV);
             BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream(), StandardCharsets.ISO_8859_1));
             CSVReader csvReader = new CSVReader(reader);
 
             String[] linha;
+            csvReader.readNext(); //Descatar a primeira linha de cabeçalho
             while ((linha = csvReader.readNext()) != null) {
                 processadorCSV.processarLinha(linha[0]);
             }

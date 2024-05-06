@@ -1,12 +1,11 @@
-package jrb.testetecnico.attus.service.municipioscsv;
+package jrb.testetecnico.attus.utils.municipioscsv;
 
 import jrb.testetecnico.attus.domain.dto.MunicipioCSVDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProcessadorCSVMunicipio implements ProcessadorCSV<MunicipioCSVDto> {
-
+public class ProcessadorCSVMunicipio implements ProcessadorCSVStrategy<MunicipioCSVDto> {
     private final List<MunicipioCSVDto> estados = new ArrayList<>();
     @Override
     public void processarLinha(String linhaCSV) {
@@ -17,7 +16,6 @@ public class ProcessadorCSVMunicipio implements ProcessadorCSV<MunicipioCSVDto> 
         String nomeMunicipio = splitLinha[4];
 
         this.estados.add(new MunicipioCSVDto(codigoIBGE, nomeMunicipio, ufEstado));
-
     }
 
     @Override
