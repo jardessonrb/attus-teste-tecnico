@@ -2,7 +2,6 @@ package jrb.testetecnico.attus.service;
 
 import jrb.testetecnico.attus.domain.dto.PessoaDto;
 import jrb.testetecnico.attus.domain.form.PessoaForm;
-import jrb.testetecnico.attus.domain.model.PessoaModel;
 import jrb.testetecnico.attus.service.pessoa.PessoaService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -87,6 +86,32 @@ public class PessoaServiceTest {
         Page<PessoaDto> pessoasBuscadasPorDataNascimento = Assertions.assertDoesNotThrow(() -> pessoaService.buscar(null, dataNascimentoParaBuscaApenasComDataNascimento, paginacao));
 
         Assertions.assertEquals(quantidadeDeResgistrosEsperadosBuscandoPelaDataNascimento, pessoasBuscadasPorDataNascimento.getTotalElements());
+    }
+
+    @Test
+    @DisplayName("Testar a atualização de pessoas")
+    void testeEdicaoDePessoa(){
+        PessoaForm pessoaForm = PessoaForm
+                .builder()
+                .nomeCompleto("Maria da Cruz Silva")
+                .dataNascimento(LocalDate.of(2000, 1, 1))
+                .build();
+        String novoNome = "Maria da Cruz Silva Sousa";
+        LocalDate novaDataNascimento = LocalDate.of(2000, 2, 1);
+
+        PessoaDto pessoaDto = Assertions.assertDoesNotThrow(() -> pessoaService.criar(pessoaForm));
+        UUID pessoaId = pessoaDto.getId();
+        PessoaForm pessoaFormParaAtualizacao = PessoaForm
+                        .builder()
+                        .nomeCompleto(novoNome)
+                        .dataNascimento(novaDataNascimento)
+                        .build();
+
+        PessoaDto pessoaDtoAtualizado = Assertions.assertDoesNotThrow(() -> pessoaService.editar(pessoaId, pessoaFormParaAtualizacao));
+
+        Assertions.assertEquals(pessoaId, pessoaDtoAtualizado.getId());
+        Assertions.assertEquals(novoNome, pessoaDtoAtualizado.getNomeCompleto());
+        Assertions.assertEquals(novaDataNascimento, pessoaDtoAtualizado.getDataNascimento());
     }
 
     private List<PessoaForm> getPessoasFake(){
