@@ -49,6 +49,17 @@ public class PessoaServiceImpl implements PessoaService {
 
     @Override
     public PessoaDto editar(UUID pessoaId, PessoaForm pessoaForm) {
-        return null;
+        PessoaModel pessoa = pessoaRepository
+                .findByUuid(pessoaId)
+                .orElseThrow(
+                        () -> new NoSuchElementException("Nenhuma pessoa encontrada para o id "+pessoaId)
+                );
+
+        pessoa.setNomeCompleto(pessoaForm.nomeCompleto());
+        pessoa.setDataNascimento(pessoaForm.dataNascimento());
+
+        pessoa = pessoaRepository.save(pessoa);
+
+        return PessoaDto.toDto(pessoa);
     }
 }
