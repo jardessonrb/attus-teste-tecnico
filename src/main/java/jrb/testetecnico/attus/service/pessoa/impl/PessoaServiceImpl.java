@@ -7,9 +7,12 @@ import jrb.testetecnico.attus.domain.repository.PessoaRepository;
 import jrb.testetecnico.attus.service.pessoa.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -32,8 +35,11 @@ public class PessoaServiceImpl implements PessoaService {
     }
 
     @Override
-    public Page<PessoaDto> buscar(String nome) {
-        return null;
+    public Page<PessoaDto> buscar(String nome, LocalDate dataNascimento, Pageable paginacao) {
+        nome = Objects.isNull(nome) ? "" : nome;
+        Page<PessoaModel> pessoasPage = pessoaRepository.findPessoaByNomeCompletoAndDataNascimento(nome, dataNascimento, paginacao);
+
+        return pessoasPage.map(PessoaDto::toDto);
     }
 
     @Override
