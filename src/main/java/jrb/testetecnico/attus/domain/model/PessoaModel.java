@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -25,7 +26,7 @@ public class PessoaModel extends ModeloBase{
     @OneToOne
     private EnderecoModel enderecoPrincipal;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "pessoa_id")
-    private List<EnderecoModel> enderecos;
+    private List<EnderecoModel> enderecos = new ArrayList<>();
 }

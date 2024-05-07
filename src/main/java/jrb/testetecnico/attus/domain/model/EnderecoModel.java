@@ -1,6 +1,7 @@
 package jrb.testetecnico.attus.domain.model;
 
 import jakarta.persistence.*;
+import jrb.testetecnico.attus.domain.form.EnderecoForm;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,10 +25,18 @@ public class EnderecoModel extends ModeloBase {
 
     private String estado;
 
-//    @OneToOne(mappedBy = "pessoa")
-//    private PessoaModel pessoa;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pessoa_id", insertable = false, updatable = false)
     private PessoaModel pessoa;
+
+    public static EnderecoModel toModel(EnderecoForm enderecoForm){
+        return EnderecoModel
+                .builder()
+                .cep(enderecoForm.cep())
+                .estado(enderecoForm.estado())
+                .numero(enderecoForm.numero())
+                .logradouro(enderecoForm.logradouro())
+                .cidade(enderecoForm.cidade())
+                .build();
+    }
 }

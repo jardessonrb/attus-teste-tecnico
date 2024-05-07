@@ -21,10 +21,11 @@ public record PessoaForm(
         @JsonFormat(pattern = "dd-MM-yyyy")
         LocalDate dataNascimento,
 
+        EnderecoForm enderecoPrincipal,
         List<EnderecoForm> enderecos
 ) {
 
         public PessoaForm(String nomeCompleto, LocalDate dataNascimento) {
-                this(nomeCompleto, dataNascimento, null);
+                this(nomeCompleto, dataNascimento, null, null);
         }
 }

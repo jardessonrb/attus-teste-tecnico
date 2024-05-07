@@ -7,7 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -30,7 +32,7 @@ public class PessoaDto {
                 .nomeCompleto(pessoa.getNomeCompleto())
                 .id(pessoa.getUuid())
                 .dataNascimento(pessoa.getDataNascimento())
-                .enderecos(pessoa.getEnderecos().stream().map(EnderecoDto::toDto).toList())
+                .enderecos(Objects.nonNull(pessoa.getEnderecos()) ? pessoa.getEnderecos().stream().map(EnderecoDto::toDto).toList() : new ArrayList<>())
                 .build();
     }
 }

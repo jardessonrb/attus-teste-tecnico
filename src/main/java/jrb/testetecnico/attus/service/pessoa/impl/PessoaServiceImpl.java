@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.UUID;
@@ -33,6 +34,8 @@ public class PessoaServiceImpl implements PessoaService {
                 .builder()
                 .nomeCompleto(pessoaForm.nomeCompleto())
                 .dataNascimento(pessoaForm.dataNascimento())
+                .enderecoPrincipal(Objects.nonNull(pessoaForm.enderecoPrincipal()) ? salvarEnderecoPrincipal(EnderecoModel.toModel(pessoaForm.enderecoPrincipal())) : null)
+                .enderecos(Objects.nonNull(pessoaForm.enderecos()) ? pessoaForm.enderecos().stream().map(EnderecoModel::toModel).toList() : new ArrayList<>())
                 .build();
 
         pessoa = pessoaRepository.save(pessoa);
@@ -114,5 +117,8 @@ public class PessoaServiceImpl implements PessoaService {
                 .findByUuid(enderecoId)
                 .orElseThrow(() -> new NoSuchElementException("Nenhum endereço encontrado para o id "+enderecoId));
 
+    }
+    private EnderecoModel salvarEnderecoPrincipal(EnderecoModel enderecoModel){
+        return enderecoRepository.save(enderecoModel);
     }
 }
