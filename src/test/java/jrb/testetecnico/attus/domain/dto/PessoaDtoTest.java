@@ -29,12 +29,8 @@ public class PessoaDtoTest {
         pessoaModel.setId(1L);
 
         PessoaDto pessoaDto = PessoaDto.toDto(pessoaModel);
-
-        for(Field atributo : pessoaDto.getClass().getFields()){
-            atributo.setAccessible(true);
-            Object valorAtributo = Assertions.assertDoesNotThrow(() -> atributo.get(pessoaDto));
-            Assertions.assertNotNull(valorAtributo);
-        }
-
+        Assertions.assertNotNull(pessoaDto.getId());
+        Assertions.assertNotNull(pessoaDto.getNomeCompleto());
+        Assertions.assertNotNull(pessoaDto.getDataNascimento());
     }
 }

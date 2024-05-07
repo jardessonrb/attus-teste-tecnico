@@ -1,6 +1,7 @@
 package jrb.testetecnico.attus.service.pessoa;
 
 import jrb.testetecnico.attus.domain.dto.PessoaDto;
+import jrb.testetecnico.attus.domain.form.EnderecoForm;
 import jrb.testetecnico.attus.domain.form.PessoaForm;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -119,26 +120,41 @@ public class PessoaServiceTest {
                         .builder()
                         .nomeCompleto("Maria da Cruz Silva")
                         .dataNascimento(LocalDate.of(2000, 1, 1))
+                        .enderecoPrincipal(new EnderecoForm("Rua 28", "59260111", "Altos", "Piauí", 1200))
+                        .enderecos(Arrays.asList(
+                                new EnderecoForm("Rua 25", "59260115", "Altos", "Piauí", 1500),
+                                new EnderecoForm("Rua 10", "60260111", "Altos", "Piauí", 1600)
+                        ))
                         .build(),
                 PessoaForm
                         .builder()
                         .nomeCompleto("Maria Fulano de Sousa")
                         .dataNascimento(LocalDate.of(1998, 10, 1))
+                        .enderecoPrincipal(new EnderecoForm("Rua 30", "5894255", "Teresina", "Piauí", 1000))
+                        .enderecos(Arrays.asList(
+                                new EnderecoForm("Rua 30", "60260111", "Teresina", "Piauí", 1100)
+                        ))
                         .build(),
                 PessoaForm
                         .builder()
                         .nomeCompleto("José Gomes Paulo")
                         .dataNascimento(LocalDate.of(2000, 1, 1))
+                        .enderecos(Arrays.asList(
+                                new EnderecoForm("Rua 60", "59260116", "Castelo do Piauí", "Piauí", 1500),
+                                new EnderecoForm("Rua 60", "80260111", "Castelo do Piauí", "Piauí", 1600)
+                        ))
                         .build(),
                 PessoaForm
                         .builder()
                         .nomeCompleto("Ciclano de Alvez Beltrano")
                         .dataNascimento(LocalDate.of(2000, 1, 1))
+                        .enderecoPrincipal(new EnderecoForm("Rua 200", "59260111", "Altos", "Piauí", 202022))
                         .build(),
                 PessoaForm
                         .builder()
                         .nomeCompleto("Attus da Silva")
                         .dataNascimento(LocalDate.of(2000, 1, 1))
+                        .enderecoPrincipal(new EnderecoForm("Rua 100", "59260111", "Altos", "Piauí", 15998))
                         .build()
         );
     }
