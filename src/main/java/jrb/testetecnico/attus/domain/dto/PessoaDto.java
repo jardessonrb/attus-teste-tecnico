@@ -24,6 +24,8 @@ public class PessoaDto {
 
     private LocalDate dataNascimento;
 
+    private EnderecoDto enderecoPrincipal;
+
     private List<EnderecoDto> enderecos;
 
     public static PessoaDto toDto(PessoaModel pessoa){
@@ -32,6 +34,7 @@ public class PessoaDto {
                 .nomeCompleto(pessoa.getNomeCompleto())
                 .id(pessoa.getUuid())
                 .dataNascimento(pessoa.getDataNascimento())
+                .enderecoPrincipal(Objects.nonNull(pessoa.getEnderecoPrincipal()) ? EnderecoDto.toDto(pessoa.getEnderecoPrincipal()) : null)
                 .enderecos(Objects.nonNull(pessoa.getEnderecos()) ? pessoa.getEnderecos().stream().map(EnderecoDto::toDto).toList() : new ArrayList<>())
                 .build();
     }

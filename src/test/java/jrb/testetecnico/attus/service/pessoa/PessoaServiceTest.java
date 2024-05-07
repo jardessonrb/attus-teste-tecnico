@@ -1,5 +1,6 @@
 package jrb.testetecnico.attus.service.pessoa;
 
+import jrb.testetecnico.attus.domain.dto.EnderecoDto;
 import jrb.testetecnico.attus.domain.dto.PessoaDto;
 import jrb.testetecnico.attus.domain.form.EnderecoForm;
 import jrb.testetecnico.attus.domain.form.PessoaForm;
@@ -112,6 +113,59 @@ public class PessoaServiceTest {
         Assertions.assertEquals(pessoaId, pessoaDtoAtualizado.getId());
         Assertions.assertEquals(novoNome, pessoaDtoAtualizado.getNomeCompleto());
         Assertions.assertEquals(novaDataNascimento, pessoaDtoAtualizado.getDataNascimento());
+    }
+
+    @Test
+    @DisplayName("Teste para definição de endereço principal válido")
+    void testeParaDefinicaoEnderecoPrincipalValido(){
+        PessoaForm pessoaForm = PessoaForm
+                    .builder()
+                    .nomeCompleto("José Gomes Paulo")
+                    .dataNascimento(LocalDate.of(2000, 1, 1))
+                    .enderecos(Arrays.asList(
+                            new EnderecoForm("Rua 60", "59260116", "Castelo do Piauí", "Piauí", 1500),
+                            new EnderecoForm("Rua 60", "80260111", "Castelo do Piauí", "Piauí", 1600)
+                    ))
+                    .build();
+        int quantidadeEnderecosEsperados = 2;
+        PessoaDto pessoaDto = Assertions.assertDoesNotThrow(() -> pessoaService.criar(pessoaForm));
+
+        Assertions.assertEquals(quantidadeEnderecosEsperados, pessoaDto.getEnderecos().size());
+        Assertions.assertNull(pessoaDto.getEnderecoPrincipal());
+
+        UUID pessoaId = pessoaDto.getId();
+        EnderecoDto enderecoDto = pessoaDto.getEnderecos().get(0);
+        UUID enderecoId = enderecoDto.getId();
+
+        Assertions.assertDoesNotThrow(() -> pessoaService.definirEnderecoPrincipal(pessoaId, enderecoId));
+        pessoaDto = Assertions.assertDoesNotThrow(() -> pessoaService.buscarPorId(pessoaId));
+        Assertions.assertNotNull(pessoaDto.getEnderecoPrincipal());
+        Assertions.assertEquals(enderecoId, pessoaDto.getEnderecoPrincipal().getId());
+    }
+
+    @Test
+    @DisplayName("Teste para troca de endereço principal válido")
+    void testeParaTrocaDeEnderecoPrincipalValido(){
+        PessoaForm pessoaForm = PessoaForm
+                .builder()
+                .nomeCompleto("Maria Fulano de Sousa")
+                .dataNascimento(LocalDate.of(1998, 10, 1))
+                .enderecoPrincipal(new EnderecoForm("Rua 30", "5894255", "Teresina", "Piauí", 1000))
+                .enderecos(Arrays.asList(
+                        new EnderecoForm("Rua 30", "60260111", "Teresina", "Piauí", 1100)
+                ))
+                .build();
+
+        PessoaDto pessoaDto = Assertions.assertDoesNotThrow(() -> pessoaService.criar(pessoaForm));
+
+        UUID pessoaId = pessoaDto.getId();
+        UUID enderecoPrincipalAnteriorId = pessoaDto.getEnderecoPrincipal().getId();
+        UUID enderecoPrincipalFuturoId    = pessoaDto.getEnderecos().get(0).getId();
+
+        Assertions.assertDoesNotThrow(() -> pessoaService.definirEnderecoPrincipal(pessoaId, enderecoPrincipalFuturoId));
+        pessoaDto = Assertions.assertDoesNotThrow(() -> pessoaService.buscarPorId(pessoaId));
+        Assertions.assertEquals(enderecoPrincipalFuturoId, pessoaDto.getEnderecoPrincipal().getId());
+        Assertions.assertEquals(enderecoPrincipalAnteriorId, pessoaDto.getEnderecos().get(0).getId());
     }
 
     private List<PessoaForm> getPessoasFake(){

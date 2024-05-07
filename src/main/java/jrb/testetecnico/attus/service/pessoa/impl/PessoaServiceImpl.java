@@ -81,10 +81,17 @@ public class PessoaServiceImpl implements PessoaService {
     @Override
     public void definirEnderecoPrincipal(UUID pessoaId, UUID enderecoId) {
         PessoaModel pessoaModel = buscarPessoaPorId(pessoaId);
-        EnderecoModel enderecoModel = buscarEnderecoPorId(enderecoId);
+        EnderecoModel enderecoPrincipalFuturo = buscarEnderecoPorId(enderecoId);
 
-        pessoaModel.setEnderecoPrincipal(enderecoModel);
+        EnderecoModel enderecoPrincipalAnterior = pessoaModel.getEnderecoPrincipal();
+
+        pessoaModel.setEnderecoPrincipal(enderecoPrincipalFuturo);
+        if(Objects.nonNull(enderecoPrincipalAnterior)){
+            pessoaModel.getEnderecos().add(enderecoPrincipalAnterior);
+        }
+
         pessoaRepository.save(pessoaModel);
+
         return;
     }
 
