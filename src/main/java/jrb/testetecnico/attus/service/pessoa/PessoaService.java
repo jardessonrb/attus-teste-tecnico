@@ -1,6 +1,7 @@
 package jrb.testetecnico.attus.service.pessoa;
 
 import jrb.testetecnico.attus.domain.dto.PessoaDto;
+import jrb.testetecnico.attus.domain.form.EnderecoForm;
 import jrb.testetecnico.attus.domain.form.PessoaForm;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,4 +18,8 @@ public interface PessoaService {
     PessoaDto buscarPorId(UUID pessoaId);
 
     PessoaDto editar(UUID pessoaId, PessoaForm pessoaForm);
+
+    void definirEnderecoPrincipal(UUID pessoaId, UUID enderecoId);
+
+    PessoaDto inserirEndereco(UUID pessoaId, EnderecoForm enderecoForm);
 }
