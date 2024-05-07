@@ -2,12 +2,14 @@ package jrb.testetecnico.attus.domain.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 @Entity
 @Table(name = "tb_endereco")
 public class EnderecoModel extends ModeloBase {

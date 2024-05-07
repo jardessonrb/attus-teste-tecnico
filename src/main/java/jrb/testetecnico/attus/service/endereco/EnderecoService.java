@@ -8,11 +8,7 @@ import java.util.UUID;
 
 public interface EnderecoService {
 
-    EnderecoDto inserir(UUID pessoaId, EnderecoForm enderecoForm);
-
-    List<EnderecoDto> buscarEnderecos(UUID pessoaId);
-
-    Void definirEnderecoPrincipal(UUID pessoaId, UUID enderecoId);
+    List<EnderecoDto> buscarEnderecosPorPessoa(UUID pessoaId);
 
     EnderecoDto atualizar(UUID enderecoId, EnderecoForm enderecoForm);
 

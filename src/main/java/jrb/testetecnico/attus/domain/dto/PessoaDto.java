@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -21,12 +22,15 @@ public class PessoaDto {
 
     private LocalDate dataNascimento;
 
+    private List<EnderecoDto> enderecos;
+
     public static PessoaDto toDto(PessoaModel pessoa){
         return PessoaDto
                 .builder()
                 .nomeCompleto(pessoa.getNomeCompleto())
                 .id(pessoa.getUuid())
                 .dataNascimento(pessoa.getDataNascimento())
+                .enderecos(pessoa.getEnderecos().stream().map(EnderecoDto::toDto).toList())
                 .build();
     }
 }
