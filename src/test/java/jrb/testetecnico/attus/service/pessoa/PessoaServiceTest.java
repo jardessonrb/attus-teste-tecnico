@@ -1,8 +1,7 @@
-package jrb.testetecnico.attus.service;
+package jrb.testetecnico.attus.service.pessoa;
 
 import jrb.testetecnico.attus.domain.dto.PessoaDto;
 import jrb.testetecnico.attus.domain.form.PessoaForm;
-import jrb.testetecnico.attus.service.pessoa.PessoaService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
