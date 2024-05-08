@@ -190,6 +190,30 @@ public class PessoaServiceTest {
         Assertions.assertEquals(quantidadeDeEnderecosEsperados, pessoaDto.getEnderecos().size());
     }
 
+    @Test
+    @DisplayName("Testar a atualização de pessoas inválida")
+    void testeEdicaoDePessoaInvalida(){
+        PessoaForm pessoaForm = PessoaForm
+                .builder()
+                .nomeCompleto("Maria da Cruz Silva")
+                .dataNascimento(LocalDate.of(2000, 1, 1))
+                .build();
+        String novoNome = "Maria da Cruz Silva Sousa";
+        LocalDate novaDataNascimento = LocalDate.of(2000, 2, 1);
+
+        PessoaDto pessoaDto = Assertions.assertDoesNotThrow(() -> pessoaService.criar(pessoaForm));
+        UUID pessoaIdFake = UUID.randomUUID();
+        String mensagemEsperada = "Nenhuma pessoa encontrada para o id "+pessoaIdFake;
+        PessoaForm pessoaFormParaAtualizacao = PessoaForm
+                .builder()
+                .nomeCompleto(novoNome)
+                .dataNascimento(novaDataNascimento)
+                .build();
+
+        Exception exception = Assertions.assertThrows(NoSuchElementException.class, () -> pessoaService.editar(pessoaIdFake, pessoaFormParaAtualizacao));
+        Assertions.assertEquals(mensagemEsperada, exception.getMessage());
+    }
+
     private List<PessoaForm> getPessoasFake(){
         return Arrays.asList(
                 PessoaForm
