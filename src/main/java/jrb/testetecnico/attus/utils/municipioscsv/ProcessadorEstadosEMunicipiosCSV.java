@@ -3,9 +3,7 @@ package jrb.testetecnico.attus.utils.municipioscsv;
 import jrb.testetecnico.attus.domain.dto.EstadoCSVDto;
 import jrb.testetecnico.attus.domain.dto.MunicipioCSVDto;
 import jrb.testetecnico.attus.domain.model.MunicipioEstadoModel;
-import jrb.testetecnico.attus.domain.repository.MunicipioEstadoRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jrb.testetecnico.attus.domain.repository.MunicipioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +18,7 @@ public class ProcessadorEstadosEMunicipiosCSV {
     private LeitorCSV leitorCSV;
 
     @Autowired
-    private MunicipioEstadoRepository municipioEstadoRepository;
+    private MunicipioRepository municipioEstadoRepository;
 
     public void processarMunicipiosEEstados(){
         String pathArquivoEstados = "csv/estados.csv";
