@@ -168,6 +168,28 @@ public class PessoaServiceTest {
         Assertions.assertEquals(enderecoPrincipalAnteriorId, pessoaDto.getEnderecos().get(0).getId());
     }
 
+    @Test
+    @DisplayName("Teste para inserção de endereço em pessoa")
+    void testeParaInserirEndereco(){
+        PessoaForm pessoaForm = PessoaForm
+                .builder()
+                .nomeCompleto("Maria Fulano de Sousa")
+                .dataNascimento(LocalDate.of(1998, 10, 1))
+                .enderecoPrincipal(new EnderecoForm("Rua 30", "5894255", "Teresina", "Piauí", 1000))
+                .enderecos(Arrays.asList(
+                        new EnderecoForm("Rua 30", "60260111", "Teresina", "Piauí", 1100)
+                ))
+                .build();
+        PessoaDto pessoaDto = Assertions.assertDoesNotThrow(() -> pessoaService.criar(pessoaForm));
+        UUID pessoaId = pessoaDto.getId();
+        int quantidadeDeEnderecosEsperados = 2;
+
+        EnderecoForm novoEndereco = new EnderecoForm("Rua 2589", "5894255", "Rio de Janeiro", "Rio de Janeiro", 1000);
+        Assertions.assertDoesNotThrow(() -> pessoaService.inserirEndereco(pessoaId, novoEndereco));
+        pessoaDto = Assertions.assertDoesNotThrow(() -> pessoaService.buscarPorId(pessoaId));
+        Assertions.assertEquals(quantidadeDeEnderecosEsperados, pessoaDto.getEnderecos().size());
+    }
+
     private List<PessoaForm> getPessoasFake(){
         return Arrays.asList(
                 PessoaForm
