@@ -1,7 +1,7 @@
 package jrb.testetecnico.attus.service.municipioestado;
 
+import jrb.testetecnico.attus.domain.dto.EstadoDto;
 import jrb.testetecnico.attus.domain.dto.MunicipioDto;
-import jrb.testetecnico.attus.domain.repository.MunicipioEstadoRepository;
 import jrb.testetecnico.attus.service.estadomunicipio.MunicipioEstadoService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -70,5 +70,28 @@ public class MunicipioEstadoServiceTest {
 
         Page<MunicipioDto> municipios = Assertions.assertDoesNotThrow(() -> municipioEstadoService.buscarMunicipios(nomeMunicipio, ufEstado, paginacao));
         Assertions.assertEquals(quantidadeDeMunicipiosEsperados, municipios.getTotalElements());
+    }
+
+    @Test
+    @DisplayName("Teste para buscar estados por filtro válido")
+    void testeBuscarEstadosPorFiltroValido(){
+            String nomeEstado = "Mato";
+        Pageable paginacao = PageRequest.of(0, 27);
+        Long quantidadeDeEstadosEsperados = 2L;
+
+        Page<EstadoDto> estados = Assertions.assertDoesNotThrow(() -> municipioEstadoService.buscarEstados(nomeEstado, paginacao));
+        Assertions.assertEquals(quantidadeDeEstadosEsperados, estados.getTotalElements());
+
+    }
+    @Test
+    @DisplayName("Teste para buscar estados por filtro como UF válido")
+    void testeBuscarEstadosPorFiltroComoUFValido(){
+        String nomeEstado = "MT";
+        Pageable paginacao = PageRequest.of(0, 27);
+        Long quantidadeDeEstadosEsperados = 1L;
+
+        Page<EstadoDto> estados = Assertions.assertDoesNotThrow(() -> municipioEstadoService.buscarEstados(nomeEstado, paginacao));
+        Assertions.assertEquals(quantidadeDeEstadosEsperados, estados.getTotalElements());
+
     }
 }
