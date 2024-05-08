@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -28,6 +29,9 @@ public class EnderecoServiceImpl implements EnderecoService {
         PessoaModel pessoaModel = buscarPessoaPorId(pessoaId);
 
         List<EnderecoModel> enderecosBuscados = enderecoRepository.findByPessoa(pessoaModel);
+        if(Objects.nonNull(pessoaModel.getEnderecoPrincipal())){
+            enderecosBuscados.add(pessoaModel.getEnderecoPrincipal());
+        }
 
         return enderecosBuscados.stream().map(EnderecoDto::toDto).toList();
     }

@@ -25,13 +25,20 @@ public class EnderecoModel extends ModeloBase {
 
     private String estado;
 
+    private Boolean isEnderecoPrincipal;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pessoa_id", insertable = false, updatable = false)
     private PessoaModel pessoa;
 
     public static EnderecoModel toModel(EnderecoForm enderecoForm){
+        return toModel(enderecoForm, false);
+    }
+
+    public static EnderecoModel toModel(EnderecoForm enderecoForm, Boolean isEnderecoPrincipal){
         return EnderecoModel
                 .builder()
+                .isEnderecoPrincipal(isEnderecoPrincipal)
                 .cep(enderecoForm.cep())
                 .estado(enderecoForm.estado())
                 .numero(enderecoForm.numero())
@@ -39,4 +46,5 @@ public class EnderecoModel extends ModeloBase {
                 .cidade(enderecoForm.cidade())
                 .build();
     }
+
 }

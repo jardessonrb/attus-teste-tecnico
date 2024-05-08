@@ -26,9 +26,12 @@ public class EnderecoDto {
 
     private String estado;
 
+    private Boolean isEnderecoPrincipal;
+
     public static EnderecoDto toDto(EnderecoModel enderecoModel){
         return EnderecoDto
                 .builder()
+                .isEnderecoPrincipal(enderecoModel.getIsEnderecoPrincipal())
                 .id(enderecoModel.getUuid())
                 .logradouro(enderecoModel.getLogradouro())
                 .cep(enderecoModel.getCep())

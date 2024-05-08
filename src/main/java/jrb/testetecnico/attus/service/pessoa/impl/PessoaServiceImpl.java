@@ -84,9 +84,11 @@ public class PessoaServiceImpl implements PessoaService {
         EnderecoModel enderecoPrincipalFuturo = buscarEnderecoPorId(enderecoId);
 
         EnderecoModel enderecoPrincipalAnterior = pessoaModel.getEnderecoPrincipal();
-
+        enderecoPrincipalFuturo.setIsEnderecoPrincipal(true);
         pessoaModel.setEnderecoPrincipal(enderecoPrincipalFuturo);
+
         if(Objects.nonNull(enderecoPrincipalAnterior)){
+            enderecoPrincipalAnterior.setIsEnderecoPrincipal(false);
             pessoaModel.getEnderecos().add(enderecoPrincipalAnterior);
         }
 
@@ -100,6 +102,7 @@ public class PessoaServiceImpl implements PessoaService {
         PessoaModel pessoaModel = buscarPessoaPorId(pessoaId);
         EnderecoModel enderecoModel = EnderecoModel
                 .builder()
+                .isEnderecoPrincipal(false)
                 .cep(enderecoForm.cep())
                 .cidade(enderecoForm.cidade())
                 .estado(enderecoForm.estado())
