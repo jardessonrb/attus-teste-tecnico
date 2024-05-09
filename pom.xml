@@ -87,6 +87,7 @@
 						<exclude>jrb/testetecnico/attus/domain/model/**</exclude>
 						<exclude>jrb/testetecnico/attus/domain/form/**</exclude>
 						<exclude>jrb/testetecnico/attus/controller/**</exclude>
+						<exclude>jrb/testetecnico/attus/shared/handler/**</exclude>
 					</excludes>
 				</configuration>
 				<executions>
