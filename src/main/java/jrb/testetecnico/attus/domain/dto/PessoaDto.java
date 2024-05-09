@@ -1,6 +1,6 @@
 package jrb.testetecnico.attus.domain.dto;
 
-import jrb.testetecnico.attus.domain.model.PessoaModel;
+import jrb.testetecnico.attus.domain.model.Pessoa;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,7 +28,7 @@ public class PessoaDto {
 
     private List<EnderecoDto> enderecos;
 
-    public static PessoaDto toDto(PessoaModel pessoa){
+    public static PessoaDto toDto(Pessoa pessoa){
         return PessoaDto
                 .builder()
                 .nomeCompleto(pessoa.getNomeCompleto())

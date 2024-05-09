@@ -1,6 +1,6 @@
 package jrb.testetecnico.attus.domain.dto;
 
-import jrb.testetecnico.attus.domain.model.EnderecoModel;
+import jrb.testetecnico.attus.domain.model.Endereco;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,7 +28,7 @@ public class EnderecoDto {
 
     private Boolean isEnderecoPrincipal;
 
-    public static EnderecoDto toDto(EnderecoModel enderecoModel){
+    public static EnderecoDto toDto(Endereco enderecoModel){
         return EnderecoDto
                 .builder()
                 .isEnderecoPrincipal(enderecoModel.getIsEnderecoPrincipal())

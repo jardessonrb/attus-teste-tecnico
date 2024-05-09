@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "tb_municipio_estado")
-public class MunicipioEstadoModel extends ModeloBase {
+public class MunicipioEstado extends ModeloBase {
 
     private String nomeMunicipio;
 

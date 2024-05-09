@@ -1,6 +1,6 @@
 package jrb.testetecnico.attus.domain.repository;
 
-import jrb.testetecnico.attus.domain.model.PessoaModel;
+import jrb.testetecnico.attus.domain.model.Pessoa;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,15 +13,15 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface PessoaRepository extends JpaRepository<PessoaModel, Long> {
+public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
-    Optional<PessoaModel> findByUuid(UUID pessoaUuid);
+    Optional<Pessoa> findByUuid(UUID pessoaUuid);
 
-    @Query(value = "SELECT p FROM PessoaModel p " +
+    @Query(value = "SELECT p FROM Pessoa p " +
             "WHERE (LENGTH(:nome) = 0 and :dataNascimento is null) " +
             "OR (p.nomeCompleto ILIKE CONCAT('%', :nome, '%') and p.dataNascimento = :dataNascimento)" +
             "OR (LENGTH(:nome) = 0 and :dataNascimento is not null and p.dataNascimento = :dataNascimento)" +
             "OR (LENGTH(:nome) > 0 and :dataNascimento is null and  p.nomeCompleto ILIKE CONCAT('%', :nome, '%'))",
             nativeQuery = false)
-    Page<PessoaModel> findPessoaByNomeCompletoAndDataNascimento(@Param("nome") String nome, @Param("dataNascimento")LocalDate dataNascimento, Pageable paginacao);
+    Page<Pessoa> findPessoaByNomeCompletoAndDataNascimento(@Param("nome") String nome, @Param("dataNascimento")LocalDate dataNascimento, Pageable paginacao);
 }

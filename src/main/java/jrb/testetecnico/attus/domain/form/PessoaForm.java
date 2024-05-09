@@ -3,7 +3,6 @@ package jrb.testetecnico.attus.domain.form;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jrb.testetecnico.attus.domain.model.EnderecoModel;
 import lombok.Builder;
 import org.springframework.format.annotation.DateTimeFormat;
 

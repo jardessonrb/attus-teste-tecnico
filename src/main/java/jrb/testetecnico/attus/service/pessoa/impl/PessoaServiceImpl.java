@@ -3,8 +3,8 @@ package jrb.testetecnico.attus.service.pessoa.impl;
 import jrb.testetecnico.attus.domain.dto.PessoaDto;
 import jrb.testetecnico.attus.domain.form.EnderecoForm;
 import jrb.testetecnico.attus.domain.form.PessoaForm;
-import jrb.testetecnico.attus.domain.model.EnderecoModel;
-import jrb.testetecnico.attus.domain.model.PessoaModel;
+import jrb.testetecnico.attus.domain.model.Endereco;
+import jrb.testetecnico.attus.domain.model.Pessoa;
 import jrb.testetecnico.attus.domain.repository.EnderecoRepository;
 import jrb.testetecnico.attus.domain.repository.PessoaRepository;
 import jrb.testetecnico.attus.service.pessoa.PessoaService;
@@ -29,15 +29,15 @@ public class PessoaServiceImpl implements PessoaService {
 
     @Override
     public PessoaDto criar(PessoaForm pessoaForm) {
-        List<EnderecoModel> enderecos = Objects.nonNull(pessoaForm.enderecos()) ?
-                pessoaForm.enderecos().stream().map(EnderecoModel::toModel).collect(Collectors.toList()) :
+        List<Endereco> enderecos = Objects.nonNull(pessoaForm.enderecos()) ?
+                pessoaForm.enderecos().stream().map(Endereco::toModel).collect(Collectors.toList()) :
                 new ArrayList<>();
 
         if(Objects.nonNull(pessoaForm.enderecoPrincipal())){
-            enderecos.add(EnderecoModel.toModel(pessoaForm.enderecoPrincipal(), true));
+            enderecos.add(Endereco.toModel(pessoaForm.enderecoPrincipal(), true));
         }
 
-        PessoaModel pessoa = PessoaModel
+        Pessoa pessoa = Pessoa
                 .builder()
                 .nomeCompleto(pessoaForm.nomeCompleto())
                 .dataNascimento(pessoaForm.dataNascimento())
@@ -52,14 +52,14 @@ public class PessoaServiceImpl implements PessoaService {
     @Override
     public Page<PessoaDto> buscar(String nome, LocalDate dataNascimento, Pageable paginacao) {
         nome = Objects.isNull(nome) ? "" : nome;
-        Page<PessoaModel> pessoasPage = pessoaRepository.findPessoaByNomeCompletoAndDataNascimento(nome, dataNascimento, paginacao);
+        Page<Pessoa> pessoasPage = pessoaRepository.findPessoaByNomeCompletoAndDataNascimento(nome, dataNascimento, paginacao);
 
         return pessoasPage.map(PessoaDto::toDto);
     }
 
     @Override
     public PessoaDto buscarPorId(UUID pessoaId) {
-        PessoaModel pessoa = pessoaRepository
+        Pessoa pessoa = pessoaRepository
                 .findByUuid(pessoaId)
                 .orElseThrow(
                         () -> new EntityNotFoundExcepion("Nenhuma pessoa encontrada para o id "+pessoaId)
@@ -70,7 +70,7 @@ public class PessoaServiceImpl implements PessoaService {
 
     @Override
     public PessoaDto editar(UUID pessoaId, PessoaForm pessoaForm) {
-        PessoaModel pessoa = pessoaRepository
+        Pessoa pessoa = pessoaRepository
                 .findByUuid(pessoaId)
                 .orElseThrow(
                         () -> new EntityNotFoundExcepion("Nenhuma pessoa encontrada para o id "+pessoaId)
@@ -86,7 +86,7 @@ public class PessoaServiceImpl implements PessoaService {
 
     @Override
     public void definirEnderecoPrincipal(UUID pessoaId, UUID enderecoId) {
-        PessoaModel pessoaModel = buscarPessoaPorId(pessoaId);
+        Pessoa pessoaModel = buscarPessoaPorId(pessoaId);
 
         //Caso em que o endereço já é o principal
         if(Objects.nonNull(pessoaModel.getEnderecoPrincipal()) && pessoaModel.getEnderecoPrincipal().getId().equals(enderecoId)){
@@ -108,8 +108,8 @@ public class PessoaServiceImpl implements PessoaService {
 
     @Override
     public PessoaDto inserirEndereco(UUID pessoaId, EnderecoForm enderecoForm) {
-        PessoaModel pessoaModel = buscarPessoaPorId(pessoaId);
-        EnderecoModel enderecoModel = EnderecoModel
+        Pessoa pessoaModel = buscarPessoaPorId(pessoaId);
+        Endereco enderecoModel = Endereco
                 .builder()
                 .isEnderecoPrincipal(false)
                 .cep(enderecoForm.cep())
@@ -125,13 +125,13 @@ public class PessoaServiceImpl implements PessoaService {
         return PessoaDto.toDto(pessoaModel);
     }
 
-    private PessoaModel buscarPessoaPorId(UUID pessoaId){
+    private Pessoa buscarPessoaPorId(UUID pessoaId){
         return pessoaRepository
                 .findByUuid(pessoaId)
                 .orElseThrow(() -> new EntityNotFoundExcepion("Nenhuma pessoa encontrada para o id "+pessoaId));
     }
 
-    private EnderecoModel buscarEnderecoPorId(UUID enderecoId){
+    private Endereco buscarEnderecoPorId(UUID enderecoId){
         return enderecoRepository
                 .findByUuid(enderecoId)
                 .orElseThrow(() -> new EntityNotFoundExcepion("Nenhum endereço encontrado para o id "+enderecoId));

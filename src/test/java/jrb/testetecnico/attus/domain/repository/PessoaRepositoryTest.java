@@ -1,6 +1,6 @@
 package jrb.testetecnico.attus.domain.repository;
 
-import jrb.testetecnico.attus.domain.model.PessoaModel;
+import jrb.testetecnico.attus.domain.model.Pessoa;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ public class PessoaRepositoryTest {
     @Test
     @DisplayName("Teste de repository")
     void testeParaMetodoDeBuscarPessoaPorUuid(){
-        PessoaModel pessoaModel = PessoaModel
+        Pessoa pessoaModel = Pessoa
                 .builder()
                 .nomeCompleto("Beltrano Silva")
                 .dataNascimento(LocalDate.of(2000, 1, 1))
@@ -33,8 +33,8 @@ public class PessoaRepositoryTest {
         pessoaModel = pessoaRepository.save(pessoaModel);
         UUID pessoaId = pessoaModel.getUuid();
         UUID pessoaIdFake = UUID.randomUUID();
-        Optional<PessoaModel> optionalPessoaModel = Assertions.assertDoesNotThrow(() -> pessoaRepository.findByUuid(pessoaId));
-        Optional<PessoaModel> optionalPessoaModelEmpty = Assertions.assertDoesNotThrow(() -> pessoaRepository.findByUuid(pessoaIdFake));
+        Optional<Pessoa> optionalPessoaModel = Assertions.assertDoesNotThrow(() -> pessoaRepository.findByUuid(pessoaId));
+        Optional<Pessoa> optionalPessoaModelEmpty = Assertions.assertDoesNotThrow(() -> pessoaRepository.findByUuid(pessoaIdFake));
 
         Assertions.assertTrue(optionalPessoaModel.isPresent());
         Assertions.assertFalse(optionalPessoaModelEmpty.isPresent());

@@ -2,7 +2,7 @@ package jrb.testetecnico.attus.utils.municipioscsv;
 
 import jrb.testetecnico.attus.domain.dto.EstadoCSVDto;
 import jrb.testetecnico.attus.domain.dto.MunicipioCSVDto;
-import jrb.testetecnico.attus.domain.model.MunicipioEstadoModel;
+import jrb.testetecnico.attus.domain.model.MunicipioEstado;
 import jrb.testetecnico.attus.domain.repository.MunicipioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,7 +32,7 @@ public class ProcessadorEstadosEMunicipiosCSV {
 
         for (MunicipioCSVDto municipio : municipios){
             EstadoCSVDto estado = estadosMapeados.get(municipio.ufEstado());
-            MunicipioEstadoModel municipioEstadoModel = MunicipioEstadoModel
+            MunicipioEstado municipioEstadoModel = MunicipioEstado
                     .builder()
                     .nomeMunicipio(municipio.nomeMunicipio())
                     .ufEstado(estado.UF())

@@ -17,7 +17,7 @@ import java.util.Objects;
 @Builder
 @Entity
 @Table(name = "tb_pessoa")
-public class PessoaModel extends ModeloBase{
+public class Pessoa extends ModeloBase{
     private static final long serialVersionUID = 1L;
 
     private String nomeCompleto;
@@ -26,9 +26,9 @@ public class PessoaModel extends ModeloBase{
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "pessoa_id")
-    private List<EnderecoModel> enderecos = new ArrayList<>();
+    private List<Endereco> enderecos = new ArrayList<>();
 
-    public EnderecoModel getEnderecoPrincipal(){
+    public Endereco getEnderecoPrincipal(){
         return Objects.nonNull(this.enderecos) ? this.enderecos.stream().filter(endereco -> endereco.getIsEnderecoPrincipal()).findFirst().orElse(null) : null;
     }
 }

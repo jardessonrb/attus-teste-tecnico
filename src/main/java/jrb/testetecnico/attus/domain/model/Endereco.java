@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "tb_endereco")
-public class EnderecoModel extends ModeloBase {
+public class Endereco extends ModeloBase {
 
     private String logradouro;
 
@@ -29,14 +29,14 @@ public class EnderecoModel extends ModeloBase {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pessoa_id", insertable = false, updatable = false)
-    private PessoaModel pessoa;
+    private Pessoa pessoa;
 
-    public static EnderecoModel toModel(EnderecoForm enderecoForm){
+    public static Endereco toModel(EnderecoForm enderecoForm){
         return toModel(enderecoForm, false);
     }
 
-    public static EnderecoModel toModel(EnderecoForm enderecoForm, Boolean isEnderecoPrincipal){
-        return EnderecoModel
+    public static Endereco toModel(EnderecoForm enderecoForm, Boolean isEnderecoPrincipal){
+        return Endereco
                 .builder()
                 .isEnderecoPrincipal(isEnderecoPrincipal)
                 .cep(enderecoForm.cep())
