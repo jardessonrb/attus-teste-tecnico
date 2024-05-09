@@ -30,6 +30,10 @@
     
   ![Imagem do swagger](https://github.com/jardessonrb/attus-teste-tecnico/blob/main/src/main/resources/prints/swagger.png)
 
+  - Diagrama de classe da aplicação
+
+  ![Imagem do diagrama de classe](https://github.com/jardessonrb/attus-teste-tecnico/blob/main/src/main/resources/prints/diagrama.png)
+
 ### Como executar a aplicação
 ### Pré-requisitos
   - Certifique-se de ter instalado em sua máquina:
@@ -65,6 +69,8 @@
   mvn package
 
   ```
+  Esse comando executará os testes automatizados da aplicação, que serão usados no coverage.
+  
   Nessa etapa você deverá ver algo como
   
   ![Imagem do buil com sucesso](https://github.com/jardessonrb/attus-teste-tecnico/blob/main/src/main/resources/prints/build_success.png)
