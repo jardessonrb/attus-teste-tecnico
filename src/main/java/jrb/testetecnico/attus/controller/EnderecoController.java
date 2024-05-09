@@ -1,5 +1,6 @@
 package jrb.testetecnico.attus.controller;
 
+import jakarta.validation.Valid;
 import jrb.testetecnico.attus.domain.dto.EnderecoDto;
 import jrb.testetecnico.attus.domain.form.EnderecoForm;
 import jrb.testetecnico.attus.service.endereco.EnderecoService;
@@ -33,7 +34,7 @@ public class EnderecoController {
     }
 
     @PutMapping("/{enderecoId}")
-    public ResponseEntity<EnderecoDto> buscarEnderecoPorId(@PathVariable("enderecoId") UUID enderecoId, @RequestBody EnderecoForm enderecoForm){
+    public ResponseEntity<EnderecoDto> atualizarEndereco(@PathVariable("enderecoId") UUID enderecoId, @RequestBody @Valid  EnderecoForm enderecoForm){
         EnderecoDto enderecoDto = enderecoService.atualizar(enderecoId, enderecoForm);
 
         return ResponseEntity.ok(enderecoDto);

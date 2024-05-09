@@ -1,5 +1,6 @@
 package jrb.testetecnico.attus.controller;
 
+import jakarta.validation.Valid;
 import jrb.testetecnico.attus.domain.dto.PessoaDto;
 import jrb.testetecnico.attus.domain.form.EnderecoForm;
 import jrb.testetecnico.attus.domain.form.PessoaForm;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -18,6 +20,7 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.UUID;
 
+@Validated
 @RestController
 @RequestMapping("/pessoa")
 public class PessoaController {
@@ -34,7 +37,7 @@ public class PessoaController {
     }
 
     @PostMapping
-    public ResponseEntity<PessoaDto> criarPessoa(@RequestBody PessoaForm pessoaForm, UriComponentsBuilder uriComponentsBuilder){
+    public ResponseEntity<PessoaDto> criarPessoa(@RequestBody @Valid PessoaForm pessoaForm, UriComponentsBuilder uriComponentsBuilder){
         PessoaDto pessoaDto = pessoaService.criar(pessoaForm);
 
         URI uri = uriComponentsBuilder.path("/pessoa/{id}").buildAndExpand(pessoaDto.getId()).toUri();
@@ -50,7 +53,7 @@ public class PessoaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PessoaDto > editarPessoa(@PathVariable("id") UUID pessoaId, @RequestBody PessoaForm pessoaForm){
+    public ResponseEntity<PessoaDto > editarPessoa(@PathVariable("id") UUID pessoaId, @RequestBody @Valid PessoaForm pessoaForm){
 
         return ResponseEntity.ok(pessoaService.editar(pessoaId, pessoaForm));
     }
