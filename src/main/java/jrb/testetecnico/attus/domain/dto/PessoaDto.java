@@ -35,7 +35,7 @@ public class PessoaDto {
                 .id(pessoa.getUuid())
                 .dataNascimento(pessoa.getDataNascimento())
                 .enderecoPrincipal(Objects.nonNull(pessoa.getEnderecoPrincipal()) ? EnderecoDto.toDto(pessoa.getEnderecoPrincipal()) : null)
-                .enderecos(Objects.nonNull(pessoa.getEnderecos()) ? pessoa.getEnderecos().stream().map(EnderecoDto::toDto).toList() : new ArrayList<>())
+                .enderecos(Objects.nonNull(pessoa.getEnderecos()) ? pessoa.getEnderecos().stream().filter(endereco -> !endereco.getIsEnderecoPrincipal()).map(EnderecoDto::toDto).toList() : new ArrayList<>())
                 .build();
     }
 }

@@ -14,10 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PessoaServiceImpl implements PessoaService {
@@ -30,12 +28,19 @@ public class PessoaServiceImpl implements PessoaService {
 
     @Override
     public PessoaDto criar(PessoaForm pessoaForm) {
+        List<EnderecoModel> enderecos = Objects.nonNull(pessoaForm.enderecos()) ?
+                pessoaForm.enderecos().stream().map(EnderecoModel::toModel).collect(Collectors.toList()) :
+                new ArrayList<>();
+
+        if(Objects.nonNull(pessoaForm.enderecoPrincipal())){
+            enderecos.add(EnderecoModel.toModel(pessoaForm.enderecoPrincipal(), true));
+        }
+
         PessoaModel pessoa = PessoaModel
                 .builder()
                 .nomeCompleto(pessoaForm.nomeCompleto())
                 .dataNascimento(pessoaForm.dataNascimento())
-                .enderecoPrincipal(Objects.nonNull(pessoaForm.enderecoPrincipal()) ? salvarEnderecoPrincipal(EnderecoModel.toModel(pessoaForm.enderecoPrincipal())) : null)
-                .enderecos(Objects.nonNull(pessoaForm.enderecos()) ? pessoaForm.enderecos().stream().map(EnderecoModel::toModel).toList() : new ArrayList<>())
+                .enderecos(enderecos)
                 .build();
 
         pessoa = pessoaRepository.save(pessoa);
@@ -81,20 +86,23 @@ public class PessoaServiceImpl implements PessoaService {
     @Override
     public void definirEnderecoPrincipal(UUID pessoaId, UUID enderecoId) {
         PessoaModel pessoaModel = buscarPessoaPorId(pessoaId);
-        EnderecoModel enderecoPrincipalFuturo = buscarEnderecoPorId(enderecoId);
 
-        EnderecoModel enderecoPrincipalAnterior = pessoaModel.getEnderecoPrincipal();
-        enderecoPrincipalFuturo.setIsEnderecoPrincipal(true);
-        pessoaModel.setEnderecoPrincipal(enderecoPrincipalFuturo);
-
-        if(Objects.nonNull(enderecoPrincipalAnterior)){
-            enderecoPrincipalAnterior.setIsEnderecoPrincipal(false);
-            pessoaModel.getEnderecos().add(enderecoPrincipalAnterior);
+        //Caso em que o endereço já é o principal
+        if(Objects.nonNull(pessoaModel.getEnderecoPrincipal()) && pessoaModel.getEnderecoPrincipal().getId().equals(enderecoId)){
+            return;
         }
 
-        pessoaRepository.save(pessoaModel);
+        pessoaModel.getEnderecos().stream().forEach(endereco -> {
+            if(endereco.getIsEnderecoPrincipal() && !endereco.getUuid().equals(enderecoId)){
+                endereco.setIsEnderecoPrincipal(false);
+            }
 
-        return;
+            if(endereco.getUuid().equals(enderecoId)){
+                endereco.setIsEnderecoPrincipal(true);
+            }
+        });
+
+        pessoaRepository.save(pessoaModel);
     }
 
     @Override

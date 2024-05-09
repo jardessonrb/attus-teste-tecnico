@@ -18,7 +18,8 @@ public interface PessoaRepository extends JpaRepository<PessoaModel, Long> {
     Optional<PessoaModel> findByUuid(UUID pessoaUuid);
 
     @Query(value = "SELECT p FROM PessoaModel p " +
-            "WHERE (p.nomeCompleto ILIKE CONCAT('%', :nome, '%') and p.dataNascimento = :dataNascimento)" +
+            "WHERE (LENGTH(:nome) = 0 and :dataNascimento is null) " +
+            "OR (p.nomeCompleto ILIKE CONCAT('%', :nome, '%') and p.dataNascimento = :dataNascimento)" +
             "OR (LENGTH(:nome) = 0 and :dataNascimento is not null and p.dataNascimento = :dataNascimento)" +
             "OR (LENGTH(:nome) > 0 and :dataNascimento is null and  p.nomeCompleto ILIKE CONCAT('%', :nome, '%'))",
             nativeQuery = false)

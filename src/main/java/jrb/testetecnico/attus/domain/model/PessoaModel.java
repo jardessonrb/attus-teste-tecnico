@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,10 +24,11 @@ public class PessoaModel extends ModeloBase{
 
     private LocalDate dataNascimento;
 
-    @OneToOne
-    private EnderecoModel enderecoPrincipal;
-
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "pessoa_id")
     private List<EnderecoModel> enderecos = new ArrayList<>();
+
+    public EnderecoModel getEnderecoPrincipal(){
+        return Objects.nonNull(this.enderecos) ? this.enderecos.stream().filter(endereco -> endereco.getIsEnderecoPrincipal()).findFirst().orElse(null) : null;
+    }
 }

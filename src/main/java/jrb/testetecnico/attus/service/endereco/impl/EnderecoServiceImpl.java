@@ -29,9 +29,6 @@ public class EnderecoServiceImpl implements EnderecoService {
         PessoaModel pessoaModel = buscarPessoaPorId(pessoaId);
 
         List<EnderecoModel> enderecosBuscados = enderecoRepository.findByPessoa(pessoaModel);
-        if(Objects.nonNull(pessoaModel.getEnderecoPrincipal())){
-            enderecosBuscados.add(pessoaModel.getEnderecoPrincipal());
-        }
 
         return enderecosBuscados.stream().map(EnderecoDto::toDto).toList();
     }
