@@ -2,6 +2,7 @@ package jrb.testetecnico.attus.shared.handler;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jrb.testetecnico.attus.shared.exception.dto.ExceptionDefautlDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,8 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class ErrorFieldFormException {
+
+    @Autowired
     private MessageSource messsageSource;
 
     @ResponseStatus(code = HttpStatus.UNPROCESSABLE_ENTITY)
@@ -34,7 +37,7 @@ public class ErrorFieldFormException {
 
         return ExceptionDefautlDto
                 .builder()
-                .mensagem("Campos Inválidos: "+erros.stream().collect(Collectors.joining()))
+                .mensagem("Campos Inválidos: "+erros.stream().collect(Collectors.joining(", ")))
                 .statusCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
                 .pathRequest(request.getRequestURI())
                 .build();

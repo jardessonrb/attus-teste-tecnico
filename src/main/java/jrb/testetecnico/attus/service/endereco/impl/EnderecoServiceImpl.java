@@ -41,6 +41,7 @@ public class EnderecoServiceImpl implements EnderecoService {
         enderecoModel.setEstado(enderecoForm.estado());
         enderecoModel.setNumero(enderecoForm.numero());
         enderecoModel.setLogradouro(enderecoForm.logradouro());
+        enderecoModel.setIsEnderecoPrincipal(enderecoModel.getIsEnderecoPrincipal());
 
         enderecoModel = enderecoRepository.save(enderecoModel);
 
