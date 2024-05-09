@@ -90,5 +90,18 @@
 
   ```
 
+#### FAQS
+##### Uso de Lombok no projeto
+   - Lombok é uma biblioteca Java que auxilia no desenvolvimento com anotações que
+geram códigos comumente usados como os Getters, Setters, Constructors, Equals, HashCode e até o Builder para criação 
+dos objetos
+   - Ao baixar o projeto em uma IDE como o IntelliJ ou Editor de código como o VSCode pode ser necessário instalar algum
+plugin para que não aponte erros nas referências aos métodos gerados pelo Lombok
+   - Exemplo:
+     | IntelliJ                                      | VSCode                                      |
+     | --------------------------------------------- | -------------------------------------------- |
+     | ![Imagem Lombok IntelliJ](https://github.com/jardessonrb/attus-teste-tecnico/blob/main/src/main/resources/prints/lombok-intellij.png)      | ![Imagem Lombok VSCode](https://github.com/jardessonrb/attus-teste-tecnico/blob/main/src/main/resources/prints/lombok-vscode.png)      |
+
+
   
     
