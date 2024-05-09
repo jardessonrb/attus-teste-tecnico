@@ -8,6 +8,7 @@ import jrb.testetecnico.attus.domain.model.PessoaModel;
 import jrb.testetecnico.attus.domain.repository.EnderecoRepository;
 import jrb.testetecnico.attus.domain.repository.PessoaRepository;
 import jrb.testetecnico.attus.service.pessoa.PessoaService;
+import jrb.testetecnico.attus.shared.exception.EntityNotFoundExcepion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -61,7 +62,7 @@ public class PessoaServiceImpl implements PessoaService {
         PessoaModel pessoa = pessoaRepository
                 .findByUuid(pessoaId)
                 .orElseThrow(
-                        () -> new NoSuchElementException("Nenhuma pessoa encontrada para o id "+pessoaId)
+                        () -> new EntityNotFoundExcepion("Nenhuma pessoa encontrada para o id "+pessoaId)
                 );
 
         return PessoaDto.toDto(pessoa);
@@ -72,7 +73,7 @@ public class PessoaServiceImpl implements PessoaService {
         PessoaModel pessoa = pessoaRepository
                 .findByUuid(pessoaId)
                 .orElseThrow(
-                        () -> new NoSuchElementException("Nenhuma pessoa encontrada para o id "+pessoaId)
+                        () -> new EntityNotFoundExcepion("Nenhuma pessoa encontrada para o id "+pessoaId)
                 );
 
         pessoa.setNomeCompleto(pessoaForm.nomeCompleto());
@@ -127,16 +128,13 @@ public class PessoaServiceImpl implements PessoaService {
     private PessoaModel buscarPessoaPorId(UUID pessoaId){
         return pessoaRepository
                 .findByUuid(pessoaId)
-                .orElseThrow(() -> new NoSuchElementException("Nenhuma pessoa encontrada para o id "+pessoaId));
+                .orElseThrow(() -> new EntityNotFoundExcepion("Nenhuma pessoa encontrada para o id "+pessoaId));
     }
 
     private EnderecoModel buscarEnderecoPorId(UUID enderecoId){
         return enderecoRepository
                 .findByUuid(enderecoId)
-                .orElseThrow(() -> new NoSuchElementException("Nenhum endereço encontrado para o id "+enderecoId));
+                .orElseThrow(() -> new EntityNotFoundExcepion("Nenhum endereço encontrado para o id "+enderecoId));
 
-    }
-    private EnderecoModel salvarEnderecoPrincipal(EnderecoModel enderecoModel){
-        return enderecoRepository.save(enderecoModel);
     }
 }

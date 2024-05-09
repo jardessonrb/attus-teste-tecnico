@@ -4,6 +4,7 @@ import jrb.testetecnico.attus.domain.dto.EnderecoDto;
 import jrb.testetecnico.attus.domain.dto.PessoaDto;
 import jrb.testetecnico.attus.domain.form.EnderecoForm;
 import jrb.testetecnico.attus.domain.form.PessoaForm;
+import jrb.testetecnico.attus.shared.exception.EntityNotFoundExcepion;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,7 +57,7 @@ public class PessoaServiceTest {
 
         Assertions.assertDoesNotThrow(() -> pessoaService.buscarPorId(pessoaId));
 
-        Exception exception = Assertions.assertThrows(NoSuchElementException.class, () -> pessoaService.buscarPorId(pessoaIdFake));
+        EntityNotFoundExcepion exception = Assertions.assertThrows(EntityNotFoundExcepion.class, () -> pessoaService.buscarPorId(pessoaIdFake));
         Assertions.assertEquals(mensagemErroEsperada, exception.getMessage());
     }
 
@@ -210,7 +211,7 @@ public class PessoaServiceTest {
                 .dataNascimento(novaDataNascimento)
                 .build();
 
-        Exception exception = Assertions.assertThrows(NoSuchElementException.class, () -> pessoaService.editar(pessoaIdFake, pessoaFormParaAtualizacao));
+        EntityNotFoundExcepion exception = Assertions.assertThrows(EntityNotFoundExcepion.class, () -> pessoaService.editar(pessoaIdFake, pessoaFormParaAtualizacao));
         Assertions.assertEquals(mensagemEsperada, exception.getMessage());
     }
 
